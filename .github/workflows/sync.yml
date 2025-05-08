@@ -23,11 +23,15 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run Python script
+      - name: Crear archivo de credenciales
+        run: |
+          echo "$CREDENTIALS_JSON" > credentials.json
+        env:
+          CREDENTIALS_JSON: ${{ secrets.CREDENTIALS_JSON }}
+
+      - name: Ejecutar script de sincronización
         env:
           POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
           GSHEET_ID: ${{ secrets.GSHEET_ID }}
-          CREDENTIALS_JSON: ${{ secrets.CREDENTIALS_JSON }}
-        run: |
-          echo "$CREDENTIALS_JSON" > credentials.json
-          python main.py
+          CREDENTIALS_FILE: credentials.json
+        run: python Parte01_Railway/main.py

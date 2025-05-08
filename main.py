@@ -8,11 +8,13 @@ from datetime import datetime
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
+print("🔐 Conectando a PostgreSQL y Google Sheets...")
+
 load_dotenv()
 RAILWAY_URL = os.getenv("POSTGRES_URL")
 
 # Conexion a Google Sheets
-CREDENTIALS_FILE = os.getenv("API_GOOGLE_SHEET")
+CREDENTIALS_FILE = os.getenv("CREDENTIALS_FILE")
 if not os.path.exists(CREDENTIALS_FILE):
     raise FileNotFoundError(f"Credenciales no encontradas en: {CREDENTIALS_FILE}")
 # URL o ID de la hoja
@@ -27,10 +29,7 @@ engine = create_engine(RAILWAY_URL)
 Session = sessionmaker(bind=engine)
 session = Session()
 
-# Obtener hoja y cargar a pandas
-spreadsheet = client.open_by_url(GOOGLE_SHEET_URL)
-sheet = spreadsheet.worksheet(NOMBRE_HOJA)
-data = sheet.get_all_records()
+print("✅ Conexión a Railway establecida.")
 
 df = pd.read_excel(GOOGLE_SHEET_URL, sheet_name="Hoja 1")
 df = df.applymap(lambda x: str(x).strip() if isinstance(x, str) else x)
