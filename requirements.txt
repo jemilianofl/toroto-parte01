@@ -1,0 +1,6 @@
+oauth2client
+gspread
+sqlalchemy
+psycopg2-binary
+python-dotenv
+pandas
