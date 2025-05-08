@@ -34,4 +34,4 @@ jobs:
           POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
           GSHEET_ID: ${{ secrets.GSHEET_ID }}
           CREDENTIALS_FILE: credentials.json
-        run: python Parte01_Railway/main.py
+        run: main.py
