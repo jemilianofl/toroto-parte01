@@ -16,7 +16,7 @@ CREDENTIALS_FILE = os.getenv("API_GOOGLE_SHEET")
 if not os.path.exists(CREDENTIALS_FILE):
     raise FileNotFoundError(f"Credenciales no encontradas en: {CREDENTIALS_FILE}")
 # URL o ID de la hoja
-GOOGLE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1vjzSorAdthIfQAp8uTbNvp--XKqXZVnN1trzkfkmmHA/edit?gid=1414590629#gid=1414590629'
+GOOGLE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1vjzSorAdthIfQAp8uTbNvp--XKqXZVnN1trzkfkmmHA/export?format=xlsx'
 NOMBRE_HOJA = 'Hoja 1'
 # Autenticación
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
@@ -32,7 +32,7 @@ spreadsheet = client.open_by_url(GOOGLE_SHEET_URL)
 sheet = spreadsheet.worksheet(NOMBRE_HOJA)
 data = sheet.get_all_records()
 
-df = pd.DataFrame(data)
+df = pd.read_excel(GOOGLE_SHEET_URL, sheet_name="Hoja 1")
 df = df.applymap(lambda x: str(x).strip() if isinstance(x, str) else x)
 
 # Insertar proyectos únicos
